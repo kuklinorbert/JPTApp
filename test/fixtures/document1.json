@@ -1,0 +1,73 @@
+{ "data":
+{
+  "c1c6c085-bb60-44b4-a0f2-051a83db8281":{
+    "title": "Super cool item title",
+    "pdfLinks": [
+      {
+        "title": "super cool pdf 1",
+        "link": "http://firebasestorage.com/link/1.pdf"
+      },
+      {
+        "title": "super cool pdf 2",
+        "link": "http://firebasestorage.com/link/2.pdf"
+      }
+    ],
+    "htmlTags": [
+      {
+        "title": "super cool pdf 1",
+        "html": "<html><body><p>super cool html</p></body></html>"
+      },
+      {
+        "title": "super cool pdf 1",
+        "html": "<html><body><p>super cool html</p></body></html>"
+      }
+    
+  ]
+},
+  "f788792f-6fe3-45bf-87a5-4f56af49a2cb":{
+    "title": "Super cool item title",
+    "pdfLinks": [
+      {
+        "title": "super cool pdf 1",
+        "link": "http://firebasestorage.com/link/1.pdf"
+      },
+      {
+        "title": "super cool pdf 2",
+        "link": "http://firebasestorage.com/link/2.pdf"
+      }
+    ],
+    "htmlTags": [
+      {
+        "title": "super cool pdf 1",
+        "html": "<html><body><p>super cool html</p></body></html>"
+      },
+      {
+        "title": "super cool pdf 1",
+        "html": "<html><body><p>super cool html</p></body></html>"
+      }
+    
+  ]
+}
+}
+,"test":{"testid":{
+  "title": "Test",
+  "pdfLinks": [
+    {
+      "title": "test",
+      "link": "testtest"
+    }
+  ],
+  "htmlTags": [
+    {
+      "title": "test",
+      "html": "testtest"
+    }
+  
+]
+}
+
+
+
+}
+
+}
