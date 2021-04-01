@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jptapp/features/jptapp/domain/entities/item.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/item_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/display_items.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/load_items.dart';
-import 'package:jptapp/features/jptapp/presentation/widgets/loading_widget.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/message_display.dart';
 
 import '../../../../injection_container.dart';
@@ -44,12 +42,12 @@ class ItemsPage extends StatelessWidget {
                 height: 10,
               ),
               BlocBuilder<ItemBloc, ItemState>(
-                cubit: sl<ItemBloc>(),
+                cubit: sl<ItemBloc>()..getItem,
                 builder: (_, state) {
                   if (state is Empty) {
                     return LoadItems();
                   } else if (state is Loading) {
-                    return LoadingWidget();
+                    return CircularProgressIndicator();
                   } else if (state is Loaded) {
                     return DisplayItems(item: state.item);
                   } else if (state is Error) {

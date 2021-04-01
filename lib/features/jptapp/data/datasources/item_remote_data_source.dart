@@ -3,7 +3,6 @@ import 'package:jptapp/core/error/exceptions.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:jptapp/features/jptapp/data/models/item_model.dart';
-import 'package:jptapp/features/jptapp/domain/entities/item.dart';
 
 abstract class ItemRemoteDataSource {
   Future<Map<String, ItemModel>> getItem();

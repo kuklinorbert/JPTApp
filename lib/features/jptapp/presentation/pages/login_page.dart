@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/item_bloc.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/login_bloc.dart';
-import 'package:jptapp/features/jptapp/presentation/dto/login_dto.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
 
 import '../../../../injection_container.dart';
-import 'items_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,9 +11,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String inputLogin;
+  String inputEmail;
   String inputPassword;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthBloc authBloc;
 
   @override
   void dispose() {
@@ -23,32 +22,43 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    authBloc = sl<AuthBloc>()..add(CheckAuthEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: _buildBody(),
+      body: Center(
+        child: SingleChildScrollView(
+          child: _buildBody(),
+        ),
       ),
     );
   }
 
   _buildBody() {
-    return BlocListener<LoginBloc, LoginState>(
-      cubit: sl<LoginBloc>(),
+    return BlocListener<AuthBloc, AuthState>(
+      cubit: authBloc,
       listener: (context, state) {
         if (state is ErrorLoggedState) {
-          final snackBar = SnackBar(content: Text('Invalid credentials...'));
+          final snackBar = SnackBar(content: Text(state.message));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        } else if (state is LoggedState) {
+        } else if (state is Authenticated) {
           Navigator.of(context).pushReplacementNamed('/items');
         }
       },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        cubit: sl<LoginBloc>(),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        cubit: sl<AuthBloc>(),
         builder: (BuildContext context, state) {
-          if (state is InitialLoginState) {
-            return _buildForm();
-          } else if (state is CheckingLoginState) {
+          if (state is CheckAuthState) {
             return CircularProgressIndicator();
+          } else if (state is CheckingLoginState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is Authenticated) {
+            return Container();
+            //return Center(child: CircularProgressIndicator());
           } else {
             return _buildForm();
           }
@@ -78,10 +88,10 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Username *',
               ),
               onChanged: (value) {
-                inputLogin = value;
+                inputEmail = value;
               },
               onSaved: (String value) {
-                inputLogin = value;
+                inputEmail = value;
               },
               validator: (String value) {
                 return value.isEmpty ? 'Username is mandatory' : null;
@@ -110,18 +120,14 @@ class _LoginPageState extends State<LoginPage> {
               height: 30.0,
             ),
             RaisedButton(
-              color: Colors.black12,
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  final loginDTO = LoginDTO(
-                    username: inputLogin,
-                    password: inputPassword,
-                  );
-                  sl<LoginBloc>().add(CheckLoginEvent(login: loginDTO));
+                  authBloc.add(AuthLoginEvent(
+                      email: inputEmail, password: inputPassword));
                 }
               },
               child: Text("Login"),
-            )
+            ),
           ],
         ),
       ),

@@ -10,7 +10,7 @@ class GetItem extends UseCase<Map<String, Item>, NoParams> {
   GetItem(this.repository);
 
   @override
-  Future<Either<Failure, Map<String, Item>>> call(NoParams) async {
+  Future<Either<Failure, Map<String, Item>>> call(NoParams noParams) async {
     return await repository.getItem();
   }
 }

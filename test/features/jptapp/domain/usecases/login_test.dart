@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jptapp/features/jptapp/domain/entities/login_model.dart';
-import 'package:jptapp/features/jptapp/domain/repositories/login_repository.dart';
+import 'package:jptapp/features/jptapp/data/models/login_model.dart';
+import 'package:jptapp/features/jptapp/domain/repositories/auth_repository.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
 import 'package:mockito/mockito.dart';
 
-class MockLoginRepository extends Mock implements LoginRepository {}
+class MockLoginRepository extends Mock implements AuthRepository {}
 
 void main() {
   MockLoginRepository mockLoginRepository;

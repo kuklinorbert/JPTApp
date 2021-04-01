@@ -1,12 +1,14 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:jptapp/features/jptapp/data/datasources/item_local_data_source.dart';
-import 'package:jptapp/features/jptapp/data/datasources/login_user_data_source.dart';
-import 'package:jptapp/features/jptapp/data/repositories/login_repository_impl.dart';
-import 'package:jptapp/features/jptapp/domain/repositories/login_repository.dart';
+import 'package:jptapp/features/jptapp/data/repositories/auth_repository_impl.dart';
+import 'package:jptapp/features/jptapp/domain/repositories/auth_repository.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/login_bloc.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/logout.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/network/network_info.dart';
 import 'features/jptapp/data/datasources/item_remote_data_source.dart';
@@ -21,16 +23,20 @@ Future<void> init() async {
   //Features - Items
   //Bloc
   sl.registerLazySingleton(() => ItemBloc(item: sl()));
-  sl.registerLazySingleton(() => LoginBloc(sl()));
+  sl.registerLazySingleton(
+      () => AuthBloc(login: sl(), logout: sl(), checkAuth: sl()));
 
   //Use cases
   sl.registerLazySingleton(() => GetItem(sl()));
   sl.registerLazySingleton(() => Login(sl()));
+  sl.registerLazySingleton(() => Logout(sl()));
+  sl.registerLazySingleton(() => CheckAuth(sl()));
 
   //repository
   sl.registerLazySingleton<ItemRepository>(() => ItemRepositoryImpl(
       localDataSource: sl(), remoteDataSource: sl(), networkInfo: sl()));
-  sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(sl()));
+  sl.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(firebaseAuth: sl()));
 
   //data sources
   sl.registerLazySingleton<ItemRemoteDataSource>(
@@ -51,5 +57,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => DataConnectionChecker());
   sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton<LoginUser>(() => LoginUserImpl());
+  sl.registerLazySingleton(() => FirebaseAuth.instance);
 }

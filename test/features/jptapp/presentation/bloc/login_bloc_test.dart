@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jptapp/core/error/failure.dart';
-import 'package:jptapp/features/jptapp/domain/entities/login_model.dart';
+import 'package:jptapp/features/jptapp/data/models/login_model.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/login_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/dto/login_dto.dart';

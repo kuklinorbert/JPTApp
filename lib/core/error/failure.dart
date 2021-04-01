@@ -13,3 +13,7 @@ class ServerFailure extends Failure {}
 class CacheFailure extends Failure {}
 
 class LogInFailure extends Failure {}
+
+class LogOutFailure extends Failure {}
+
+class CheckAuthFailure extends Failure {}

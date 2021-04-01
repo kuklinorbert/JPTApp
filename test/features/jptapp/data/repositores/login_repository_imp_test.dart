@@ -2,19 +2,19 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jptapp/features/jptapp/data/datasources/login_user_data_source.dart';
 import 'package:jptapp/features/jptapp/data/models/user_model.dart';
-import 'package:jptapp/features/jptapp/data/repositories/login_repository_impl.dart';
-import 'package:jptapp/features/jptapp/domain/entities/login_model.dart';
+import 'package:jptapp/features/jptapp/data/repositories/auth_repository_impl.dart';
+import 'package:jptapp/features/jptapp/data/models/login_model.dart';
 import 'package:mockito/mockito.dart';
 
 class MockLoginUser extends Mock implements LoginUser {}
 
 void main() {
   MockLoginUser mockLoginUser;
-  LoginRepositoryImpl loginRepositoryImpl;
+  AuthRepositoryImpl loginRepositoryImpl;
 
   setUp(() {
     mockLoginUser = MockLoginUser();
-    loginRepositoryImpl = LoginRepositoryImpl(mockLoginUser);
+    loginRepositoryImpl = AuthRepositoryImpl(mockLoginUser);
   });
 
   group('Login User', () {
