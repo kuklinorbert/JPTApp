@@ -22,6 +22,7 @@ class ItemRepositoryImpl implements ItemRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteItem = await remoteDataSource.getItem();
+        localDataSource.cacheItem(remoteItem);
         return Right(remoteItem);
       } on ServerException {
         return Left(ServerFailure());

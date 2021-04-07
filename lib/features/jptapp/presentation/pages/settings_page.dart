@@ -1,6 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
+import 'package:jptapp/ui/theme_setup.dart';
+import 'package:stacked_themes/stacked_themes.dart';
 
 import '../../../../injection_container.dart';
 
@@ -52,6 +56,26 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Card(
         child: Column(
           children: [
+            ListTile(
+                title: Text('Change theme'),
+                onTap: () {
+                  if (selectedTheme > 2) {
+                    selectedTheme = 0;
+                  }
+                  getThemeManager(context).selectThemeAtIndex(selectedTheme);
+
+                  print(selectedTheme);
+                  selectedTheme++;
+                }),
+            ListTile(
+                title: Text('Change locale'),
+                onTap: () {
+                  if (EasyLocalization.of(context).locale == Locale('hu')) {
+                    EasyLocalization.of(context).locale = Locale('en');
+                  } else {
+                    EasyLocalization.of(context).locale = Locale('hu');
+                  }
+                }),
             ListTile(
                 title: Text('Logout'),
                 onTap: () {

@@ -22,7 +22,10 @@ class DetailsPage extends StatelessWidget {
                     children: [
                       ListTile(
                           title: Text(test.pdfLinks[i].title),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed('/pdf', arguments: test.pdfLinks[i]);
+                          },
                           trailing: Icon(Icons.arrow_forward_ios)),
                       Divider()
                     ],
@@ -38,7 +41,10 @@ class DetailsPage extends StatelessWidget {
                       ListTile(
                         trailing: Icon(Icons.arrow_forward_ios),
                         title: Text(test.htmlTags[i].title),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/html',
+                              arguments: test.htmlTags[i].html);
+                        },
                       ),
                       Divider()
                     ],
@@ -48,19 +54,3 @@ class DetailsPage extends StatelessWidget {
         ));
   }
 }
-
-/*
-ListView.builder(
-                    itemCount: test.pdfLinks.length,
-                    itemBuilder: (_, i) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            title: Text(test.pdfLinks[i].title),
-                            onTap: () {},
-                          ),
-                          Divider()
-                        ],
-                      );
-                    })
-                    */

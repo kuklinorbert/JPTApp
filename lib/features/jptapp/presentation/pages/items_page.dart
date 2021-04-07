@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:jptapp/features/jptapp/domain/entities/item.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/item_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/display_items.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/load_items.dart';
@@ -8,15 +10,20 @@ import 'package:jptapp/features/jptapp/presentation/widgets/message_display.dart
 import '../../../../injection_container.dart';
 
 class ItemsPage extends StatelessWidget {
+  Map<String, Item> teszt;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/qr-scan', arguments: teszt);
+        },
         child: Icon(Icons.qr_code_scanner),
       ),
       appBar: AppBar(
-        title: Text('JPT APP'),
+        title: Text('msg'.tr()),
+        textTheme: Theme.of(context).textTheme,
         actions: [
           IconButton(
               icon: Icon(Icons.settings),
@@ -49,6 +56,7 @@ class ItemsPage extends StatelessWidget {
                   } else if (state is Loading) {
                     return CircularProgressIndicator();
                   } else if (state is Loaded) {
+                    teszt = state.item;
                     return DisplayItems(item: state.item);
                   } else if (state is Error) {
                     return MessageDisplay(message: state.message);

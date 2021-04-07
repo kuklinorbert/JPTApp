@@ -17,3 +17,5 @@ class LogInFailure extends Failure {}
 class LogOutFailure extends Failure {}
 
 class CheckAuthFailure extends Failure {}
+
+class PdfFailure extends Failure {}

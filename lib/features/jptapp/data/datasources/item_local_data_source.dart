@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ItemLocalDataSource {
   Future<Map<String, ItemModel>> getLastItems();
-  Future<void> cacheItem(ItemModel itemToCache);
+  Future<void> cacheItem(Map<String, ItemModel> itemToCache);
 }
 
 const CACHED_ITEM = 'CACHED_ITEM';
@@ -18,14 +18,13 @@ class ItemLocalDataSourceImpl implements ItemLocalDataSource {
   ItemLocalDataSourceImpl({@required this.sharedPreferences});
 
   @override
-  Future<void> cacheItem(ItemModel itemToCache) {
-    return sharedPreferences.setString(
-        CACHED_ITEM, json.encode(itemToCache.toJson()));
+  Future<void> cacheItem(Map<String, ItemModel> itemToCache) {
+    return sharedPreferences.setString(CACHED_ITEM, itemToJson(itemToCache));
   }
 
   @override
   Future<Map<String, ItemModel>> getLastItems() {
-    final jsonString = sharedPreferences.getString('CACHED_ITEMS');
+    final jsonString = sharedPreferences.getString(CACHED_ITEM);
     if (jsonString != null) {
       return Future.value(itemFromJson(jsonString));
     } else {
