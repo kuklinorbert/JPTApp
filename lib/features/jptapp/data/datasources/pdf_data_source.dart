@@ -14,6 +14,7 @@ class PdfDataSourceImpl implements PdfDataSource {
           stalePeriod: const Duration(days: 1),
           maxNrOfCacheObjects: 3,
         )));
+    print(result);
     if (result != null) {
       return result;
     } else {

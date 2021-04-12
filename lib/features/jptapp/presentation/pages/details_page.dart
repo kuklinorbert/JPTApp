@@ -8,8 +8,8 @@ class DetailsPage extends StatelessWidget {
     ItemModel test = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: MediaQuery.of(context).size.height / 5,
           title: Text(test.title),
+          textTheme: Theme.of(context).textTheme,
         ),
         body: ListView(
           children: [
@@ -21,12 +21,14 @@ class DetailsPage extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
-                          title: Text(test.pdfLinks[i].title),
+                          title: Text(test.pdfLinks[i].title,
+                              style: Theme.of(context).textTheme.bodyText1),
                           onTap: () {
                             Navigator.of(context)
                                 .pushNamed('/pdf', arguments: test.pdfLinks[i]);
                           },
-                          trailing: Icon(Icons.arrow_forward_ios)),
+                          trailing: Icon(Icons.arrow_forward_ios,
+                              color: Theme.of(context).accentColor)),
                       Divider()
                     ],
                   );
@@ -39,8 +41,12 @@ class DetailsPage extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
-                        trailing: Icon(Icons.arrow_forward_ios),
-                        title: Text(test.htmlTags[i].title),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Theme.of(context).accentColor,
+                        ),
+                        title: Text(test.htmlTags[i].title,
+                            style: Theme.of(context).textTheme.bodyText1),
                         onTap: () {
                           Navigator.of(context).pushNamed('/html',
                               arguments: test.htmlTags[i].html);

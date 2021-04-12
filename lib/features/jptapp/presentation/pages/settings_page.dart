@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
+import 'package:jptapp/features/jptapp/presentation/widgets/message_display.dart';
+import 'package:jptapp/features/jptapp/presentation/widgets/snackbar_show.dart';
 import 'package:jptapp/ui/theme_setup.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
@@ -39,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
               .pushNamedAndRemoveUntil('/login', (route) => false);
         }
         if (state is ErrorLoggedState) {
-          ///
+          return MessageDisplay(message: state.message);
         }
       },
       child: BlocBuilder(
@@ -57,27 +58,36 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           children: [
             ListTile(
-                title: Text('Change theme'),
+                title: Text("set_theme".tr(),
+                    style: Theme.of(context).textTheme.bodyText2),
                 onTap: () {
                   if (selectedTheme > 2) {
                     selectedTheme = 0;
                   }
                   getThemeManager(context).selectThemeAtIndex(selectedTheme);
-
-                  print(selectedTheme);
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(buildSnackBar(context, 'change_th'.tr()));
                   selectedTheme++;
                 }),
             ListTile(
-                title: Text('Change locale'),
+                title: Text(
+                  "set_loc".tr(),
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
                 onTap: () {
                   if (EasyLocalization.of(context).locale == Locale('hu')) {
                     EasyLocalization.of(context).locale = Locale('en');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        buildSnackBar(context, 'change_loc'.tr()));
                   } else {
                     EasyLocalization.of(context).locale = Locale('hu');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        buildSnackBar(context, 'change_loc'.tr()));
                   }
                 }),
             ListTile(
-                title: Text('Logout'),
+                title: Text('logout'.tr(),
+                    style: Theme.of(context).textTheme.bodyText2),
                 onTap: () {
                   authBloc.add(AuthLogoutEvent());
                 })

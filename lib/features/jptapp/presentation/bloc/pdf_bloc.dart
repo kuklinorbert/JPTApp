@@ -7,6 +7,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jptapp/core/error/failure.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/view_pdf.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 part 'pdf_event.dart';
 part 'pdf_state.dart';
@@ -17,7 +18,10 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
   PdfBloc({@required ViewPdf viewPdf})
       : assert(viewPdf != null),
         _viewPdf = viewPdf,
-        super(PdfInitial());
+        super(Loading());
+
+  @override
+  PdfState get initialState => Loading();
 
   @override
   Stream<PdfState> mapEventToState(
@@ -42,9 +46,9 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case PdfFailure:
-        return "No cached data!";
+        return "pdffailure".tr();
       default:
-        return 'Bloc';
+        return "unexp_error".tr();
     }
   }
 }

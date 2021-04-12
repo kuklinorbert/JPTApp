@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:jptapp/core/error/exceptions.dart';
@@ -34,15 +32,15 @@ void main() {
     final tItemModel = itemFromJson(fixture('item'));
 
     test(
-      'should perform a GET request on a URL with number being the endpoint and with applicaton/json header ',
+      'should perform a GET request on a URL with item being the endpoint and with applicaton/json header ',
       () async {
         // arrange
         setUpMockHttpClientSuccess200();
         // act
-        dataSource.getItem();
+        dataSource.getItems();
         // assert
         verify(mockHttpClient.get(
-            'https://studyproject-5bc52-default-rtdb.europe-west1.firebasedatabase.app/test/.json',
+            'https://studyproject-5bc52-default-rtdb.europe-west1.firebasedatabase.app/data/.json',
             headers: {'Content-Type': 'application/json'}));
       },
     );
@@ -53,7 +51,7 @@ void main() {
         // arrange
         setUpMockHttpClientSuccess200();
         // act
-        final result = await dataSource.getItem();
+        final result = await dataSource.getItems();
         // assert
         expect(result, equals(tItemModel));
       },
@@ -64,7 +62,7 @@ void main() {
         // arrange
         setUpMockHttpClientFailure404();
         // act
-        final call = dataSource.getItem;
+        final call = dataSource.getItems;
         // assert
         expect(() => call(), throwsA(isA<ServerException>()));
       },

@@ -8,12 +8,13 @@ import 'package:jptapp/core/usecases/usecase.dart';
 import 'package:jptapp/features/jptapp/domain/entities/item.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/get_item.dart';
 import 'package:meta/meta.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 part 'item_event.dart';
 part 'item_state.dart';
 
-const String SERVER_FAILURE_MESSAGE = 'Server Failure';
-const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
+const String SERVER_FAILURE_MESSAGE = 'serverfailure';
+const String CACHE_FAILURE_MESSAGE = 'cachefailure';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState> {
   final GetItem getItem;
@@ -23,10 +24,10 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
           item != null,
         ),
         getItem = item,
-        super(Empty());
+        super(Loading());
 
   @override
-  ItemState get initialState => Empty();
+  ItemState get initialState => Loading();
 
   @override
   Stream<ItemState> mapEventToState(
@@ -51,9 +52,9 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:
-        return SERVER_FAILURE_MESSAGE;
+        return SERVER_FAILURE_MESSAGE.tr();
       case CacheFailure:
-        return CACHE_FAILURE_MESSAGE;
+        return CACHE_FAILURE_MESSAGE.tr();
       default:
         return 'Unexpected error';
     }

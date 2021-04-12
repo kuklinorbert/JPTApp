@@ -1,20 +1,25 @@
 import 'dart:io';
 
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:jptapp/features/jptapp/data/models/pdf_link_model.dart';
+import 'package:jptapp/features/jptapp/domain/entities/pdf_link.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/pdf_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/message_display.dart';
+import 'package:jptapp/features/jptapp/presentation/widgets/snackbar_show.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 
 import '../../../../injection_container.dart';
 
 class PdfViewPage extends StatelessWidget {
-  PdfLinkModel pdf;
+  PdfLink pdf;
   String pdfRoute;
   String pdfTitle;
   Directory rootPath;
@@ -27,7 +32,7 @@ class PdfViewPage extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.save),
                 onPressed: () {
-                  _saveFile();
+                  _saveFile(context);
                 })
           ],
         ),
@@ -47,9 +52,7 @@ class PdfViewPage extends StatelessWidget {
         cubit: sl<PdfBloc>()..add(ViewPdfEvent(path: pdfRoute)),
         builder: (_, state) {
           print(state);
-          if (state is PdfInitial) {
-            return Container();
-          } else if (state is Loading) {
+          if (state is Loading) {
             return CircularProgressIndicator();
           } else if (state is Loaded) {
             return PDFViewer(document: state.document);
@@ -61,15 +64,18 @@ class PdfViewPage extends StatelessWidget {
     );
   }
 
-  Future<void> _saveFile() async {
-    final permission = await Permission.storage.request().isGranted;
-    if (permission) {
+  Future<void> _saveFile(BuildContext context) async {
+    final permission = await Permission.storage.request();
+    if (permission.isGranted) {
       if (Platform.isAndroid) {
         rootPath = await DownloadsPathProvider.downloadsDirectory;
       } else {
         rootPath = await getApplicationDocumentsDirectory();
       }
-      if (rootPath != null) {
+      final network = await DataConnectionChecker().hasConnection;
+      if (network) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildSnackBar(context, 'start_down'.tr()));
         final taskId = await FlutterDownloader.enqueue(
           url: pdfRoute,
           savedDir: rootPath.path,
@@ -77,7 +83,13 @@ class PdfViewPage extends StatelessWidget {
           showNotification: true,
           openFileFromNotification: true,
         );
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildSnackBar(context, 'no_internet'.tr()));
       }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(buildSnackBar(context, 'no_perm_stor'.tr()));
     }
   }
 }

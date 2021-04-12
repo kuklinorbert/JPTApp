@@ -45,7 +45,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ItemRepository>(() => ItemRepositoryImpl(
       localDataSource: sl(), remoteDataSource: sl(), networkInfo: sl()));
   sl.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(firebaseAuth: sl()));
+      () => AuthRepositoryImpl(firebaseAuth: sl(), networkInfo: sl()));
   sl.registerLazySingleton<PdfRepository>(
       () => PdfRepositoryImpl(pdfDataSource: sl()));
 

@@ -1,19 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jptapp/core/error/failure.dart';
 import 'package:jptapp/core/usecases/usecase.dart';
 import 'package:jptapp/features/jptapp/data/models/html_tag_model.dart';
 import 'package:jptapp/features/jptapp/data/models/item_model.dart';
 import 'package:jptapp/features/jptapp/data/models/pdf_link_model.dart';
-import 'package:jptapp/features/jptapp/domain/entities/html_tag.dart';
-import 'package:jptapp/features/jptapp/domain/entities/item.dart';
-import 'package:jptapp/features/jptapp/domain/entities/pdf_link.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/get_item.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/item_bloc.dart';
 import 'package:mockito/mockito.dart';
 
-const String SERVER_FAILURE_MESSAGE = 'Server Failure';
+const String SERVER_FAILURE_MESSAGE = 'serverfailure';
 
 class MockGetItem extends Mock implements GetItem {}
 
@@ -30,7 +27,7 @@ void main() {
     'initialState should be Empty',
     () async {
       // assert
-      expect(bloc.initialState, equals(Empty()));
+      expect(bloc.initialState, equals(CheckAuthState()));
     },
   );
 

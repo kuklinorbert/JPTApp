@@ -11,13 +11,7 @@ class AuthInitial extends AuthState {}
 
 class CheckAuthState extends AuthState {}
 
-class CheckingLoginState extends AuthState {
-  CheckingLoginState(this.user);
-
-  final UserCredential user;
-
-  List<Object> get props => [user];
-}
+class CheckingLoginState extends AuthState {}
 
 class Authenticated extends AuthState {}
 

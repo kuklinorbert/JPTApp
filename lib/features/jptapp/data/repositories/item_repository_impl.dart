@@ -21,7 +21,7 @@ class ItemRepositoryImpl implements ItemRepository {
   Future<Either<Failure, Map<String, Item>>> getItem() async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteItem = await remoteDataSource.getItem();
+        final remoteItem = await remoteDataSource.getItems();
         localDataSource.cacheItem(remoteItem);
         return Right(remoteItem);
       } on ServerException {
@@ -29,7 +29,7 @@ class ItemRepositoryImpl implements ItemRepository {
       }
     } else {
       try {
-        final localItems = await localDataSource.getLastItems();
+        final localItems = await localDataSource.getItems();
         return Right(localItems);
       } on CacheException {
         return Left(CacheFailure());

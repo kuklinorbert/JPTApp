@@ -7,6 +7,7 @@ class HtmlViewPage extends StatelessWidget {
     final htmlData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Html(
         data: htmlData,
       ),

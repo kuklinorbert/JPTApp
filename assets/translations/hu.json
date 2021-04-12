@@ -1,3 +1,34 @@
 {
-    "msg" : "Udv"
+    "greet": "Üdvözöljük",
+    "set_theme": "Téma váltás",
+    "set_loc": "Nyelv váltás",
+    "logout": "Kijelentkezés",
+    "email": "Email",
+    "email_man": "Email kötelező",
+    "email_hint": "Adja meg email-t",
+    "password": "Jelszó",
+    "password_man": "Jelszó kötelező",
+    "password_hint": "Írja be a jelszavát",
+
+    "login": "Bejelentkezés",
+
+    "loginfail": "Helytelen felhasználói adatok",
+    "logoutfail": "Sikertelen kijelentkezés",
+    "authfail": "Sikertelen hitelesítés",
+    "unexp_error": "Váratlan hiba",
+    "serverfailure": "Szerver hiba",
+    "cachefailure": "Gyorsítótár hiba",
+    "pdffailure": "Nincs gyorsítótározott adat",
+
+    "change_th": "Téma megváltoztatva!",
+    "change_loc": "Nyelv megváltoztatva!",
+    "start_down": "Letöltés indítása",
+    "no_perm_stor": "Nincs jogosultság a tárhelyhez",
+    "no_perm_cam": "Nincs jogosultság a kamerához",
+
+    "alert_notf": "Nem található!",
+    "alert_cont": "Nem található tétel a QR kóddal!",
+    "alert_back": "Vissza",
+
+    "network_fail": "Nincs internet kapcsolat!"
 }

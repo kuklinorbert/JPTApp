@@ -4,12 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jptapp/core/error/failure.dart';
 import 'package:jptapp/core/usecases/usecase.dart';
 import 'package:jptapp/features/jptapp/data/models/login_model.dart';
+import 'package:jptapp/features/jptapp/domain/repositories/auth_repository.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/logout.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -30,6 +32,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(CheckAuthState());
 
   @override
+  AuthState get initialState => CheckAuthState();
+
+  @override
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
@@ -37,6 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await _checkAuth.call(NoParams());
       yield* _eitherAuthOrErrorState(result);
     } else if (event is AuthLoginEvent) {
+      yield CheckingLoginState();
       final result = await _login.call(Params(
           login: LoginModel(email: event.email, password: event.password)));
       yield* _eitherLoginOrErrorState(result);
@@ -73,7 +79,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async* {
     yield failureOrLogin.fold(
       (failure) => ErrorLoggedState(message: _mapFailureToMessage(failure)),
-      (user) {
+      (userr) {
         return Authenticated();
       },
     );
@@ -82,13 +88,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case LogInFailure:
-        return 'Failed to login';
+        return 'loginfail'.tr();
       case LogOutFailure:
-        return 'Failed to logout';
+        return 'logoutfail'.tr();
       case CheckAuthFailure:
-        return 'Failed to auth';
+        return 'authfail'.tr();
+      case NetworkFailure:
+        return 'network_fail'.tr();
       default:
-        return 'Unexpected error';
+        return 'unexp_error'.tr();
     }
   }
 }

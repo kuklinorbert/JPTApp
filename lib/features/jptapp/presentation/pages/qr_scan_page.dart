@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:jptapp/features/jptapp/domain/entities/item.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class QrScanPage extends StatefulWidget {
   @override
@@ -26,6 +27,11 @@ class _QrScanPageState extends State<QrScanPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     items = ModalRoute.of(context).settings.arguments;
     super.didChangeDependencies();
@@ -42,31 +48,34 @@ class _QrScanPageState extends State<QrScanPage> {
               child: _buildQrView(),
             ),
             Container(
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        iconSize: MediaQuery.of(context).size.height / 18,
-                        icon: Icon(Icons.flash_on),
-                        color: Colors.white,
-                        onPressed: () async {
-                          await controller?.toggleFlash();
-                        }),
-                    IconButton(
-                        iconSize: MediaQuery.of(context).size.height / 18,
-                        icon: Icon(Icons.flip_camera_android),
-                        color: Colors.white,
-                        onPressed: () async {
-                          await controller?.flipCamera();
-                        }),
-                  ]),
+              child: _buildQrItems(context),
             )
           ],
         ),
       ),
     );
+  }
+
+  Row _buildQrItems(BuildContext context) {
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+              iconSize: MediaQuery.of(context).size.height / 18,
+              icon: Icon(Icons.flash_on),
+              color: Colors.white,
+              onPressed: () async {
+                await controller?.toggleFlash();
+              }),
+          IconButton(
+              iconSize: MediaQuery.of(context).size.height / 18,
+              icon: Icon(Icons.flip_camera_android),
+              color: Colors.white,
+              onPressed: () async {
+                await controller?.flipCamera();
+              }),
+        ]);
   }
 
   Widget _buildQrView() {
@@ -102,15 +111,15 @@ class _QrScanPageState extends State<QrScanPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Not found!'),
-          content: Text('No item found with the QR code!'),
+          title: Text('alert_notf'.tr()),
+          content: Text('alert_cont'.tr()),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   controller?.resumeCamera();
                 },
-                child: Text('Approve'))
+                child: Text('alert_back'.tr()))
           ],
         );
       },
@@ -126,11 +135,12 @@ class _QrScanPageState extends State<QrScanPage> {
       controller?.pauseCamera();
       _showDialog();
     }
+  }
 
-    @override
-    void dispose() {
-      controller?.dispose();
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    controller?.dispose();
+    controller.dispose();
   }
 }
