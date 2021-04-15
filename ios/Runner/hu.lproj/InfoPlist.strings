@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by Kukli Norbert on 15.4.21..
+  
+*/
+"NSCameraUsageDescription" = "Az alkalmazásnak szüksége van a kamera hozzáféréshez";

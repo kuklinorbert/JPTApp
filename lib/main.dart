@@ -33,7 +33,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(context.locale);
     return ThemeBuilder(
         themes: getThemes(),
         defaultThemeMode: ThemeMode.light,
@@ -41,15 +40,14 @@ class MyApp extends StatelessWidget {
               theme: theme1,
               darkTheme: theme2,
               themeMode: themeMode,
-              // localeResolutionCallback:
-              //     (Locale locale, Iterable<Locale> supportedLocales) {
-              //   for (var supportedLocale in supportedLocales) {
-              //     if (locale.countryCode == supportedLocale.countryCode) {
-              //       return supportedLocale;
-              //     }
-              //   }
-              //   return locale;
-              // },
+              localeResolutionCallback:
+                  (Locale locale, Iterable<Locale> supportedLocales) {
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale.languageCode)
+                    return context.locale = supportedLocale;
+                }
+                return context.locale;
+              },
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,

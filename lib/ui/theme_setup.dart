@@ -26,6 +26,8 @@ List<ThemeData> getThemes() {
           hintStyle: GoogleFonts.oxygen(color: Colors.white),
         ),
         textTheme: TextTheme(
+            headline1: GoogleFonts.oxygen(
+                color: Color.fromRGBO(251, 222, 68, 1), fontSize: 30),
             subtitle2: GoogleFonts.oxygen(
                 color: Color.fromRGBO(251, 222, 68, 1), fontSize: 16),
             button: GoogleFonts.oxygen(color: Colors.black),
@@ -51,6 +53,8 @@ List<ThemeData> getThemes() {
               Color.fromRGBO(125, 180, 108, 1)),
         )),
         textTheme: TextTheme(
+            headline1:
+                GoogleFonts.sourceSansPro(color: Colors.black, fontSize: 25),
             subtitle2: GoogleFonts.sourceSansPro(fontSize: 17),
             button: GoogleFonts.sourceSansPro(color: Colors.black),
             headline6: GoogleFonts.sourceSansPro(
@@ -72,6 +76,8 @@ List<ThemeData> getThemes() {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         )),
         textTheme: TextTheme(
+            headline1:
+                GoogleFonts.robotoSlab(color: Colors.white, fontSize: 25),
             subtitle2: GoogleFonts.robotoSlab(fontSize: 16),
             button: GoogleFonts.robotoSlab(color: Colors.black),
             headline6: GoogleFonts.robotoSlab(

@@ -12,8 +12,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DownloadIcon extends StatefulWidget {
-  String pdfRoute;
-  String pdfTitle;
+  final String pdfRoute;
+  final String pdfTitle;
 
   DownloadIcon({@required this.pdfRoute, @required this.pdfTitle});
 
@@ -114,10 +114,9 @@ class _DownloadIconState extends State<DownloadIcon> {
       DownloadTaskStatus status = data[1];
       setState(() {
         if (status == DownloadTaskStatus.complete) {
-          print('downloaded!!');
+          delete();
           ScaffoldMessenger.of(context)
               .showSnackBar(buildSnackBar(context, "down_compl".tr()));
-          delete();
         }
       });
     });
