@@ -1,7 +1,7 @@
 { "data":
 {
   "c1c6c085-bb60-44b4-a0f2-051a83db8281":{
-    "title": "Super cool item title",
+    "title": "html pdf combined #1",
     "pdfLinks": [
       {
         "title": "super cool pdf 1",
@@ -24,8 +24,8 @@
     
   ]
 },
-  "f788792f-6fe3-45bf-87a5-4f56af49a2cb":{
-    "title": "Super cool item title",
+  "5d3a5807-6e2d-40a0-bbeb-9db48583297a":{
+    "title": "html pdf combined #2",
     "pdfLinks": [
       {
         "title": "super cool pdf 1",
@@ -47,6 +47,39 @@
       }
     
   ]
+},
+"f788792f-6fe3-45bf-87a5-4f56af49a2cb":{
+  "title": "pdf only item",
+  "pdfLinks": [
+    {
+      "title": "super cool pdf 1",
+      "link": "http://firebasestorage.com/link/1.pdf"
+    },
+    {
+      "title": "super cool pdf 2",
+      "link": "http://firebasestorage.com/link/2.pdf"
+    }
+  ],
+  "htmlTags": [
+]
+},
+"f7d1d19a-c1eb-4b5f-98b0-ad305c258343":{
+  "title": "html only item",
+  "pdfLinks": [
+  ],
+  "htmlTags": [
+    {
+      "title": "html sample",
+      "html": "<html><head><title>Example of Header-levels  </title></head><body><h6>JavaTpoint</h6><h5>JavaTpoint</h5><h4>JavaTpoint</h4><h3>JavaTpoint</h3><h2>JavaTpoint</h2><h1>JavaTpoint</h1></body></html> "
+    }
+]
+},
+"1d6bfbf2-36ec-45c2-bf12-8efd1ce131bc":{
+  "title": "empty item",
+  "pdfLinks": [
+  ],
+  "htmlTags": [ 
+]
 }
 }
 ,"test":{"testid":{
