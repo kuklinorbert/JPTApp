@@ -7,18 +7,33 @@ import 'package:jptapp/features/jptapp/data/models/login_model.dart';
 import 'package:jptapp/features/jptapp/data/repositories/auth_repository_impl.dart';
 import 'package:mockito/mockito.dart';
 
-import 'item_repository_impl_test.dart';
+class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+
+class MockNetworkInfo extends Mock implements NetworkInfo {}
 
 void main() {
   AuthRepositoryImpl authRepositoryImpl;
+  MockFirebaseAuth mockFirebaseAuth;
   MockNetworkInfo mockNetworkInfo;
-  FirebaseAuth firebaseAuth;
 
   setUp(() {
-    firebaseAuth = FirebaseAuth.instance;
-    mockNetworkInfo = mockNetworkInfo;
-    authRepositoryImpl = AuthRepositoryImpl(networkInfo: mockNetworkInfo);
+    mockFirebaseAuth = MockFirebaseAuth();
+    mockNetworkInfo = MockNetworkInfo();
+    authRepositoryImpl = AuthRepositoryImpl(
+        firebaseAuth: mockFirebaseAuth, networkInfo: mockNetworkInfo);
   });
+
+  test(
+    'should check if the device is online',
+    () async {
+      // arrange
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      // act
+      authRepositoryImpl.login(LoginModel(email: "bad", password: "login"));
+      // assert
+      verify(mockNetworkInfo.isConnected);
+    },
+  );
 
   group('Login User', () {
     final LoginModel tLogin = LoginModel(email: "bad", password: "login");
@@ -33,7 +48,7 @@ void main() {
       //act
       final result = await authRepositoryImpl.login(tLoginCorrect);
       //assert
-      expect(result, Right(firebaseAuth.currentUser));
+      expect(result, Right(tLoginCorrect));
     });
 
     test('Should return false if auth is not correct', () async {

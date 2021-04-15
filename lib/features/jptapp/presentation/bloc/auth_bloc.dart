@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jptapp/core/error/failure.dart';
 import 'package:jptapp/core/usecases/usecase.dart';
 import 'package:jptapp/features/jptapp/data/models/login_model.dart';
-import 'package:jptapp/features/jptapp/domain/repositories/auth_repository.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/logout.dart';
 import 'package:bloc/bloc.dart';

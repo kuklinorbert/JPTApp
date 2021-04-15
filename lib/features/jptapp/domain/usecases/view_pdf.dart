@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:jptapp/core/error/failure.dart';
 import 'package:jptapp/core/usecases/usecase.dart';
 import 'package:jptapp/features/jptapp/domain/repositories/pdf_repository.dart';
-import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
 
 class ViewPdf extends UseCase<PDFDocument, Params> {
   final PdfRepository repository;

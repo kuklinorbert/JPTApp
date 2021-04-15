@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jptapp">
+    package="com.example.jptapp" xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
@@ -52,6 +52,21 @@
             android:name="android.support.FILE_PROVIDER_PATHS"
             android:resource="@xml/provider_paths"/>
         </provider>
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
+
+        <provider
+        android:name="vn.hunghd.flutterdownloader.FlutterDownloaderInitializer"
+        android:authorities="${applicationId}.flutter-downloader-init"
+        android:exported="false">
+        <meta-data
+            android:name="vn.hunghd.flutterdownloader.MAX_CONCURRENT_TASKS"
+            android:value="1" />
+        </provider>
+
     </application>
     
 </manifest>

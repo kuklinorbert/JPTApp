@@ -1,96 +1,91 @@
-// import 'package:dartz/dartz.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:jptapp/core/error/failure.dart';
-// import 'package:jptapp/features/jptapp/data/models/login_model.dart';
-// import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
-// import 'package:mockito/mockito.dart';
+import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:jptapp/features/jptapp/data/models/login_model.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/logout.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
+import 'package:mockito/mockito.dart';
 
-// class MockLogin extends Mock implements Login {}
+class MockLogin extends Mock implements Login {}
 
-// void main() {
-//   MockLogin mockLogin;
-//   LoginBloc bloc;
+class MockLogout extends Mock implements Logout {}
 
-//   setUp(() {
-//     mockLogin = MockLogin();
-//     bloc = LoginBloc(mockLogin);
-//   });
+class MockCheckAuth extends Mock implements CheckAuth {}
 
-//   test(
-//     'initial state should be InitialLoginState',
-//     () async {
-//       // assert
-//       expect(bloc.initialState, equals(InitialLoginState()));
-//     },
-//   );
+void main() {
+  MockLogin mockLogin;
+  MockLogout mockLogout;
+  MockCheckAuth mockCheckAuth;
+  AuthBloc bloc;
 
-//   group('Login', () {
-//     final tLoginDTO = LoginDTO(username: "user", password: "password");
+  setUp(() {
+    mockLogin = MockLogin();
+    mockLogout = MockLogout();
+    mockCheckAuth = MockCheckAuth();
+    bloc = AuthBloc(
+        login: mockLogin, logout: mockLogout, checkAuth: mockCheckAuth);
+  });
 
-//     test('should call add movie', () async {
-//       // arrange
-//       when(mockLogin(any)).thenAnswer((_) async => Right(true));
-//       // act
-//       bloc.add(CheckLoginEvent(login: tLoginDTO));
-//       await untilCalled(mockLogin(any));
-//       // assert
-//       verify(mockLogin(Params(
-//           login: LoginModel(
-//         login: tLoginDTO.username,
-//         password: tLoginDTO.password,
-//       ))));
-//     });
+  test(
+    'initial state should be InitialLoginState',
+    () async {
+      // assert
+      expect(bloc.initialState, equals(CheckAuthState()));
+    },
+  );
 
-//     test(
-//       'should emit [Checking, Logged] when data are correct',
-//       () async {
-//         // arrange
-//         when(mockLogin(any)).thenAnswer((_) async => Right(true));
-//         // act
-//         final expected = [
-//           CheckingLoginState(),
-//           LoggedState(),
-//         ];
+  group('Login', () {
+    final tLoginmodel = LoginModel(email: "asd@asd.com", password: "123asd");
+    UserCredential user;
 
-//         expectLater(bloc, emitsInOrder(expected));
+    test('should call login', () async {
+      // arrange
+      when(mockLogin(any)).thenAnswer((_) async => Right(user));
+      // act
+      bloc.add(AuthLoginEvent(
+          email: tLoginmodel.email, password: tLoginmodel.password));
+      await untilCalled(mockLogin(any));
+      // assert
+      verify(mockLogin(Params(login: tLoginmodel)));
+    });
 
-//         // assert
-//         bloc.add(CheckLoginEvent(login: tLoginDTO));
-//       },
-//     );
+    test(
+      'should emit [CheckingLoginState, Authenticated] when data are correct',
+      () async {
+        // arrange
+        when(mockLogin(any)).thenAnswer((_) async => Right(user));
+        // act
+        final expected = [
+          CheckingLoginState(),
+          Authenticated(),
+        ];
 
-//     test(
-//       'should emit [Checking, Error] when data are not correct',
-//       () async {
-//         // arrange
-//         when(mockLogin(any)).thenAnswer((_) async => Right(false));
-//         // act
-//         bloc.add(CheckLoginEvent(login: tLoginDTO));
-//         // assert
-//         expectLater(
-//             bloc,
-//             emitsInOrder([
-//               CheckingLoginState(),
-//               ErrorLoggedState(),
-//             ]));
-//       },
-//     );
+        expectLater(bloc, emitsInOrder(expected));
 
-//     test(
-//       'should emit [Checking, Error] when server error',
-//       () async {
-//         // arrange
-//         when(mockLogin(any)).thenAnswer((_) async => Left(ServerFailure()));
-//         // act
-//         bloc.add(CheckLoginEvent(login: tLoginDTO));
-//         // assert
-//         expectLater(
-//             bloc,
-//             emitsInOrder([
-//               CheckingLoginState(),
-//               ErrorLoggedState(),
-//             ]));
-//       },
-//     );
-//   });
-// }
+        // assert
+        bloc.add(AuthLoginEvent(
+            email: tLoginmodel.email, password: tLoginmodel.password));
+      },
+    );
+
+    test(
+      'should emit [CheckingLoginState, ErrorLoggedState] when data are not correct',
+      () async {
+        // arrange
+        when(mockLogin(any)).thenAnswer((_) async => Right(null));
+        // act
+        bloc.add(AuthLoginEvent(
+            email: tLoginmodel.email, password: tLoginmodel.password));
+        // assert
+        expectLater(
+            bloc,
+            emitsInOrder([
+              CheckingLoginState(),
+              ErrorLoggedState(message: "loginfail"),
+            ]));
+      },
+    );
+  });
+}

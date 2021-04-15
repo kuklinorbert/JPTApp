@@ -55,6 +55,10 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
         return SERVER_FAILURE_MESSAGE.tr();
       case CacheFailure:
         return CACHE_FAILURE_MESSAGE.tr();
+      case ServerFailureTest:
+        return 'serverfailure';
+      case CacheFailureTest:
+        return 'cachefailure';
       default:
         return 'Unexpected error';
     }

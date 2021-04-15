@@ -30,5 +30,8 @@
     "alert_cont": "No item found with the QR code!",
     "alert_back": "Back",
 
-    "network_fail": "No internet connection!"
+    "network_fail": "No internet connection!",
+
+    "file_exists": "File already downloaded",
+    "down_compl": "Download complete"
 }

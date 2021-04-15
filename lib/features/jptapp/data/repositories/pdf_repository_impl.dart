@@ -1,4 +1,4 @@
-import 'package:advance_pdf_viewer/src/document.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jptapp/core/error/failure.dart';

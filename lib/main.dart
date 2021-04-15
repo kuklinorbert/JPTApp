@@ -17,20 +17,23 @@ import 'package:easy_localization/easy_localization.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ThemeManager.initialise();
-  await FlutterDownloader.initialize(debug: false);
+  await FlutterDownloader.initialize(debug: true);
   await Firebase.initializeApp();
   await di.init();
 
   runApp(EasyLocalization(
-      child: MyApp(),
-      supportedLocales: [Locale('en'), Locale('hu')],
-      fallbackLocale: Locale('en'),
-      path: 'assets/translations'));
+    child: MyApp(),
+    supportedLocales: [Locale('en'), Locale('hu')],
+    fallbackLocale: Locale('en'),
+    path: 'assets/translations',
+    preloaderColor: Color.fromRGBO(66, 165, 245, 1),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(context.locale);
     return ThemeBuilder(
         themes: getThemes(),
         defaultThemeMode: ThemeMode.light,
@@ -38,6 +41,15 @@ class MyApp extends StatelessWidget {
               theme: theme1,
               darkTheme: theme2,
               themeMode: themeMode,
+              // localeResolutionCallback:
+              //     (Locale locale, Iterable<Locale> supportedLocales) {
+              //   for (var supportedLocale in supportedLocales) {
+              //     if (locale.countryCode == supportedLocale.countryCode) {
+              //       return supportedLocale;
+              //     }
+              //   }
+              //   return locale;
+              // },
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,

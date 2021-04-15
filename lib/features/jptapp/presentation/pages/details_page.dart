@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jptapp/features/jptapp/data/models/item_model.dart';
 
 class DetailsPage extends StatelessWidget {

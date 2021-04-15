@@ -40,7 +40,7 @@ dependencies:
   # Firebase auth
   firebase_auth: ^0.20.1
   # Pdf viewer
-  advance_pdf_viewer: ^1.2.2
+  advance_pdf_viewer: any
   # html view
   flutter_html: ^1.2.0
   # qr scanner
@@ -61,7 +61,6 @@ dependencies:
   permission_handler: ^5.1.0
   #google fonts
   google_fonts: ^1.1.2
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

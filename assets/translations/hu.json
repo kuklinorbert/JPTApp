@@ -30,5 +30,8 @@
     "alert_cont": "Nem található tétel a QR kóddal!",
     "alert_back": "Vissza",
 
-    "network_fail": "Nincs internet kapcsolat!"
+    "network_fail": "Nincs internet kapcsolat!",
+
+    "file_exists": "A fájl már letöltve",
+    "down_compl": "Sikeres letöltés"
 }

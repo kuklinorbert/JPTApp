@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:jptapp/features/jptapp/data/models/html_tag_model.dart';
 import 'package:jptapp/features/jptapp/data/models/pdf_link_model.dart';
-import 'package:jptapp/features/jptapp/domain/entities/html_tag.dart';
 import 'package:jptapp/features/jptapp/domain/entities/item.dart';
-import 'package:jptapp/features/jptapp/domain/entities/pdf_link.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
