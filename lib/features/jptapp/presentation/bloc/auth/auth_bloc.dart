@@ -78,7 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async* {
     yield failureOrLogin.fold(
       (failure) => ErrorLoggedState(message: _mapFailureToMessage(failure)),
-      (userr) {
+      (user) {
         return Authenticated();
       },
     );

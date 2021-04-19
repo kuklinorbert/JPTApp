@@ -24,3 +24,7 @@ class CheckAuthFailure extends Failure {}
 class PdfFailure extends Failure {}
 
 class NetworkFailure extends Failure {}
+
+class DownloadFailure extends Failure {}
+
+class FileExistsFailure extends Failure {}

@@ -6,7 +6,7 @@ import 'package:jptapp/features/jptapp/data/models/html_tag_model.dart';
 import 'package:jptapp/features/jptapp/data/models/item_model.dart';
 import 'package:jptapp/features/jptapp/data/models/pdf_link_model.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/get_item.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/item_bloc.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/item/item_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'serverfailure';

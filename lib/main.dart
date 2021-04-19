@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/start_download.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/download/download_bloc.dart';
 
 import 'package:jptapp/features/jptapp/presentation/pages/details_page.dart';
 import 'package:jptapp/features/jptapp/presentation/pages/html_page.dart';
@@ -14,10 +16,11 @@ import 'injection_container.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'injection_container.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ThemeManager.initialise();
-  await FlutterDownloader.initialize(debug: true);
   await Firebase.initializeApp();
   await di.init();
 
@@ -36,32 +39,36 @@ class MyApp extends StatelessWidget {
     return ThemeBuilder(
         themes: getThemes(),
         defaultThemeMode: ThemeMode.light,
-        builder: (context, theme1, theme2, themeMode) => MaterialApp(
-              theme: theme1,
-              darkTheme: theme2,
-              themeMode: themeMode,
-              localeResolutionCallback:
-                  (Locale locale, Iterable<Locale> supportedLocales) {
-                for (var supportedLocale in supportedLocales) {
-                  if (supportedLocale.languageCode == locale.languageCode)
-                    return context.locale = supportedLocale;
-                }
-                return context.locale;
-              },
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              title: 'JPT App',
-              home: LoginPage(),
-              routes: {
-                '/login': (context) => LoginPage(),
-                '/details': (context) => DetailsPage(),
-                '/settings': (context) => SettingsPage(),
-                '/items': (context) => ItemsPage(),
-                '/pdf': (context) => PdfViewPage(),
-                '/html': (context) => HtmlViewPage(),
-                '/qr-scan': (context) => QrScanPage(),
-              },
+        builder: (context, theme1, theme2, themeMode) => BlocProvider(
+              create: (BuildContext context) =>
+                  DownloadBloc(startDownload: sl<StartDownload>()),
+              child: MaterialApp(
+                theme: theme1,
+                darkTheme: theme2,
+                themeMode: themeMode,
+                localeResolutionCallback:
+                    (Locale locale, Iterable<Locale> supportedLocales) {
+                  for (var supportedLocale in supportedLocales) {
+                    if (supportedLocale.languageCode == locale.languageCode)
+                      return context.locale = supportedLocale;
+                  }
+                  return context.locale;
+                },
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                title: 'JPT App',
+                home: LoginPage(),
+                routes: {
+                  '/login': (context) => LoginPage(),
+                  '/details': (context) => DetailsPage(),
+                  '/settings': (context) => SettingsPage(),
+                  '/items': (context) => ItemsPage(),
+                  '/pdf': (context) => PdfViewPage(),
+                  '/html': (context) => HtmlViewPage(),
+                  '/qr-scan': (context) => QrScanPage(),
+                },
+              ),
             ));
   }
 }

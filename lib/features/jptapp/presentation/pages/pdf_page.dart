@@ -2,7 +2,7 @@ import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jptapp/features/jptapp/domain/entities/pdf_link.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/pdf_bloc.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/pdf/pdf_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/download_icon.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/message_display.dart';
 
@@ -27,7 +27,9 @@ class _PdfViewPageState extends State<PdfViewPage> {
         appBar: AppBar(
           actions: [
             DownloadIcon(
-                pdfRoute: pdf.link, pdfTitle: pdf.title.replaceAll(" ", "")),
+                pdfRoute: pdf.link,
+                pdfTitle: pdf.title.replaceAll(" ", ""),
+                appBarHeight: AppBar().preferredSize.height),
           ],
         ),
         body: Container(

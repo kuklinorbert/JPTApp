@@ -5,7 +5,7 @@ import 'package:jptapp/features/jptapp/data/models/login_model.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/logout.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/auth_bloc.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/auth/auth_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 class MockLogin extends Mock implements Login {}

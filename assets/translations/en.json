@@ -11,18 +11,20 @@
     "password_hint": "Enter the password",
 
     "login": "Login",
-
     "loginfail": "Invalid credentials",
     "logoutfail": "Failed to logout",
     "authfail": "Failed to authenticate",
-    "unexp_error": "Unexcepted error",
+
+    
     "serverfailure": "Server failure",
     "cachefailure": "Cache failure",
     "pdffailure": "No cached data",
 
+    "unexp_error": "Unexcepted error",
+
     "change_th": "Theme Changed!",
     "change_loc": "Language Changed!",
-    "start_down": "Starting download...",
+
     "no_perm_stor": "No permissions for the storage",
     "no_perm_cam": "No permissions for the camera",
 
@@ -32,6 +34,8 @@
 
     "network_fail": "No internet connection!",
 
+    "start_down": "Starting download...",
     "file_exists": "File already downloaded",
-    "down_compl": "Download complete"
+    "down_compl": "Download complete",
+    "down_fail": "Download failed"
 }

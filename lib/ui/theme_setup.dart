@@ -38,7 +38,7 @@ List<ThemeData> getThemes() {
             bodyText2: GoogleFonts.oxygen(fontSize: 17))),
     //zold
     ThemeData(
-        accentColor: Color.fromRGBO(125, 180, 108, 1),
+        accentColor: Colors.black,
         backgroundColor: Colors.white,
         primaryColor: Color.fromRGBO(125, 180, 108, 1),
         scaffoldBackgroundColor: Color.fromRGBO(231, 235, 224, 1),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jptapp/features/jptapp/domain/entities/item.dart';
-import 'package:jptapp/features/jptapp/presentation/bloc/item_bloc.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/download/download_bloc.dart';
+import 'package:jptapp/features/jptapp/presentation/bloc/item/item_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/display_items.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/message_display.dart';
 import 'package:jptapp/features/jptapp/presentation/widgets/snackbar_show.dart';
@@ -40,8 +41,17 @@ class ItemsPage extends StatelessWidget {
   }
 
   Widget buildBody(BuildContext context) {
-    return BlocProvider(
-        create: (_) => sl<ItemBloc>(),
+    return BlocListener(
+        cubit: BlocProvider.of<DownloadBloc>(context),
+        listener: (context, state) {
+          if (state is DownloadComplete) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(buildSnackBar(context, "down_compl".tr()));
+          } else if (state is DownloadError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(buildSnackBar(context, state.message));
+          }
+        },
         child: Center(
           child: BlocBuilder<ItemBloc, ItemState>(
             cubit: sl<ItemBloc>()..add(GetItemsforApp()),
