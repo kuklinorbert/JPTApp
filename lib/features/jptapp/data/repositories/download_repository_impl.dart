@@ -6,6 +6,7 @@ import 'package:jptapp/core/error/failure.dart';
 import 'package:jptapp/core/network/network_info.dart';
 import 'package:jptapp/features/jptapp/data/datasources/download_data_source.dart';
 import 'package:jptapp/features/jptapp/domain/repositories/download_repository.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DownloadRepositoryImpl implements DownloadRepository {
   final DownloadDataSource downloadDataSource;
@@ -32,6 +33,16 @@ class DownloadRepositoryImpl implements DownloadRepository {
       }
     } else {
       return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, PermissionStatus>> checkPermissions() async {
+    final permission = await Permission.storage.request();
+    if (permission.isGranted) {
+      return Right(permission);
+    } else {
+      return Left(PermissionFailure());
     }
   }
 }

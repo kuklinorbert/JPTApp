@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:jptapp/core/network/network_info.dart';
 import 'package:jptapp/features/jptapp/data/models/login_model.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
@@ -14,10 +15,13 @@ class MockLogout extends Mock implements Logout {}
 
 class MockCheckAuth extends Mock implements CheckAuth {}
 
+class MockNetworkInfo extends Mock implements NetworkInfo {}
+
 void main() {
   MockLogin mockLogin;
   MockLogout mockLogout;
   MockCheckAuth mockCheckAuth;
+  MockNetworkInfo mockNetworkInfo;
   AuthBloc bloc;
 
   setUp(() {
@@ -76,8 +80,7 @@ void main() {
         // arrange
         when(mockLogin(any)).thenAnswer((_) async => Right(null));
         // act
-        bloc.add(AuthLoginEvent(
-            email: tLoginmodel.email, password: tLoginmodel.password));
+        bloc.add(AuthLoginEvent(email: 'bademail', password: 'badpw'));
         // assert
         expectLater(
             bloc,

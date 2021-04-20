@@ -28,3 +28,5 @@ class NetworkFailure extends Failure {}
 class DownloadFailure extends Failure {}
 
 class FileExistsFailure extends Failure {}
+
+class PermissionFailure extends Failure {}

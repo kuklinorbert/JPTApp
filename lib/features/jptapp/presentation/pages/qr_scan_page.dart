@@ -42,17 +42,20 @@ class _QrScanPageState extends State<QrScanPage> {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              child: _buildQrView(),
-            ),
-            Container(
-              child: _buildQrItems(context),
-            )
-          ],
+          child: Stack(children: <Widget>[
+        OrientationBuilder(
+          builder: (context, orientation) {
+            return orientation == Orientation.portrait
+                ? Container(
+                    child:
+                        _buildQrView(MediaQuery.of(context).size.width * 0.8))
+                : Container(
+                    child:
+                        _buildQrView(MediaQuery.of(context).size.height * 0.7));
+          },
         ),
-      ),
+        Container(child: _buildQrItems(context)),
+      ])),
     );
   }
 
@@ -78,13 +81,12 @@ class _QrScanPageState extends State<QrScanPage> {
         ]);
   }
 
-  Widget _buildQrView() {
-    var scanArea = MediaQuery.of(context).size.width * 0.8;
+  Widget _buildQrView(double size) {
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-        cutOutSize: scanArea,
+        cutOutSize: size,
         borderColor: Colors.red,
         borderRadius: 10,
         borderLength: 30,

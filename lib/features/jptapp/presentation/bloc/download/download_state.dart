@@ -21,3 +21,5 @@ class DownloadError extends DownloadState {
   @override
   List<Object> get props => [message];
 }
+
+class PermissionGrantedState extends DownloadState {}

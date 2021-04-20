@@ -7,6 +7,8 @@ abstract class DownloadEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class CheckPermissionEvent extends DownloadEvent {}
+
 class StartDownloadEvent extends DownloadEvent {
   final String url;
   final String saveDir;
@@ -18,4 +20,4 @@ class StartDownloadEvent extends DownloadEvent {
   List<Object> get props => [url, saveDir, fileName];
 }
 
-class DisposeEvent extends DownloadEvent {}
+class InitialEvent extends DownloadEvent {}

@@ -12,6 +12,7 @@ import 'package:jptapp/features/jptapp/domain/repositories/auth_repository.dart'
 import 'package:jptapp/features/jptapp/domain/repositories/download_repository.dart';
 import 'package:jptapp/features/jptapp/domain/repositories/pdf_repository.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/check_auth.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/check_permission.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/login.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/logout.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/start_download.dart';
@@ -38,7 +39,8 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => AuthBloc(login: sl(), logout: sl(), checkAuth: sl()));
   sl.registerLazySingleton(() => PdfBloc(viewPdf: sl()));
-  sl.registerLazySingleton(() => DownloadBloc(startDownload: sl()));
+  sl.registerLazySingleton(
+      () => DownloadBloc(startDownload: sl(), checkPermission: sl()));
 
   //Use cases
   sl.registerLazySingleton(() => GetItem(sl()));
@@ -47,6 +49,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CheckAuth(sl()));
   sl.registerLazySingleton(() => ViewPdf(sl()));
   sl.registerLazySingleton(() => StartDownload(sl()));
+  sl.registerLazySingleton(() => CheckPermission(sl()));
 
   //repository
   sl.registerLazySingleton<ItemRepository>(() => ItemRepositoryImpl(

@@ -3,10 +3,7 @@ import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/download/download_bloc.dart';
-import 'package:jptapp/features/jptapp/presentation/widgets/snackbar_show.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class DownloadIcon extends StatefulWidget {
   final String pdfRoute;
@@ -39,10 +36,6 @@ class _DownloadIconState extends State<DownloadIcon> {
 
   @override
   void dispose() {
-    if (downloadBloc.state is DownloadComplete ||
-        downloadBloc.state is DownloadError) {
-      downloadBloc.add(DisposeEvent());
-    }
     super.dispose();
   }
 
@@ -57,40 +50,44 @@ class _DownloadIconState extends State<DownloadIcon> {
   @override
   Widget build(BuildContext context) {
     setRootPath();
-    return BlocBuilder<DownloadBloc, DownloadState>(
-        cubit: downloadBloc,
-        builder: (BuildContext context, state) {
-          if (state is Downloading) {
-            return Container(
-                margin: EdgeInsets.only(right: widget.appBarHeight / 4),
-                child: Center(
-                  heightFactor: 1,
-                  widthFactor: 1,
-                  child: SizedBox(
-                    height: widget.appBarHeight / 2,
-                    width: widget.appBarHeight / 2,
-                    child: CircularProgressIndicator(),
-                  ),
-                ));
-          } else
-            return buildIconButton();
-        });
+    return BlocListener(
+      cubit: downloadBloc,
+      listener: (context, state) {
+        if (state is PermissionGrantedState) {
+          downloadBloc.add(StartDownloadEvent(
+              url: widget.pdfRoute,
+              saveDir: rootPath.path,
+              fileName: widget.pdfTitle.replaceAll(" ", "")));
+        } else if (state is DownloadError) {
+          downloadBloc.add(InitialEvent());
+        }
+      },
+      child: BlocBuilder<DownloadBloc, DownloadState>(
+          cubit: downloadBloc,
+          builder: (BuildContext context, state) {
+            if (state is Downloading) {
+              return Container(
+                  margin: EdgeInsets.only(right: widget.appBarHeight / 4),
+                  child: Center(
+                    heightFactor: 1,
+                    widthFactor: 1,
+                    child: SizedBox(
+                      height: widget.appBarHeight / 2,
+                      width: widget.appBarHeight / 2,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ));
+            } else
+              return buildIconButton();
+          }),
+    );
   }
 
   IconButton buildIconButton() {
     return IconButton(
         icon: Icon(Icons.save),
-        onPressed: () async {
-          final permission = await Permission.storage.request();
-          if (permission.isGranted) {
-            downloadBloc.add(StartDownloadEvent(
-                url: widget.pdfRoute,
-                saveDir: rootPath.path,
-                fileName: widget.pdfTitle.replaceAll(" ", "")));
-          } else {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(buildSnackBar(context, "no_perm_stor".tr()));
-          }
+        onPressed: () {
+          downloadBloc.add(CheckPermissionEvent());
         });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jptapp/features/jptapp/domain/usecases/check_permission.dart';
 import 'package:jptapp/features/jptapp/domain/usecases/start_download.dart';
 import 'package:jptapp/features/jptapp/presentation/bloc/download/download_bloc.dart';
 
@@ -40,8 +41,9 @@ class MyApp extends StatelessWidget {
         themes: getThemes(),
         defaultThemeMode: ThemeMode.light,
         builder: (context, theme1, theme2, themeMode) => BlocProvider(
-              create: (BuildContext context) =>
-                  DownloadBloc(startDownload: sl<StartDownload>()),
+              create: (BuildContext context) => DownloadBloc(
+                  startDownload: sl<StartDownload>(),
+                  checkPermission: sl<CheckPermission>()),
               child: MaterialApp(
                 theme: theme1,
                 darkTheme: theme2,

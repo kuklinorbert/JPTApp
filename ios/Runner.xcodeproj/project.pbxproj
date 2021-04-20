@@ -15,7 +15,6 @@
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		A5193C31262821E300553239 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5193C2F262821E300553239 /* InfoPlist.strings */; };
 		A56BDB792625AAAD00B978CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A56BDB782625AAAD00B978CE /* GoogleService-Info.plist */; };
-		A56BDB7B2625AE6E00B978CE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A56BDB7A2625AE6600B978CE /* libsqlite3.tbd */; };
 		B76B5E798FFCEF86E86B94EB /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8D30EAB5A300F7715ADA41 /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A56BDB7B2625AE6E00B978CE /* libsqlite3.tbd in Frameworks */,
 				B76B5E798FFCEF86E86B94EB /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
